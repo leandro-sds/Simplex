@@ -1,1 +1,1 @@
-#Simplex
+Solucionador de Simplex em Java
