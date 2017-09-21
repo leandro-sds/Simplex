@@ -3,10 +3,10 @@ package simplex;
 import java.util.Scanner;
 
 public class Simplex {
-	static float[][] tabelaSimplex;
+	
 	public static void main(String[] args) {
-		
-		int var, rest, linhas, colunas;
+		float[][] tabelaSimplex = { {70,70,1,0,0,0,4900}, {90,50,0,1,0,0,4500}, {2,0,0,0,1,0,80}, {0,3,0,0,0,1,180}, {20,60,0,0,0,0,0}};
+		int var, rest, linhas, colunas; /*
 		Scanner input = new Scanner(System.in);
 		
 		System.out.println("Digite o número de variáveis");
@@ -25,6 +25,7 @@ public class Simplex {
 		 * auxF: indicar os números de f (f1, f2, f3...)
 		 * auxCol: indicar os números de x (x1, x2, x3...)
 		 */
+		/*
 		for (int l = 0; l < tabelaSimplex.length; l++) {
 			int auxL = l+1; 
 			int auxF = 1; 
@@ -38,6 +39,7 @@ public class Simplex {
 				/* Se auxCol for maior que o número de variáveis e menor que o número de colunas 
 				 * então estas colunas indicam os valores de f
 				 */
+		/*
 				if (auxCol > var & auxCol < colunas) {
 					System.out.println("Digite o valor de f" + auxF + " da linha " + auxL);
 					tabelaSimplex[l][col] = input.nextFloat();
@@ -51,18 +53,84 @@ public class Simplex {
 			}
 		}
 		input.close();
+		*/
 		
-		imprimeTabela();
+		imprimeTabela(tabelaSimplex);
+		solucao(tabelaSimplex);
+		
 		
 	} // Fim classe main
 	
-	static public void imprimeTabela() {
-		for (int l = 0; l < tabelaSimplex.length; l++) {
-			System.out.print("\n linha " + l + " ");
-			for (int col = 0; col < tabelaSimplex[l].length; col++) {
-				System.out.print(tabelaSimplex[l][col] + " ");
+	static public void solucao(float[][] tabela) {
+		while (!melhorSol(tabela)) {
+			int ultimaLinha = tabela.length - 1;
+			
+			// descobrir o maior valor na linha -Z
+			int colunaMaior = 0;
+			float maiorValor = 0;
+			for (int j = 0; j < tabela[ultimaLinha].length; j++) {
+				if (tabela[ultimaLinha][j] > maiorValor) {
+					maiorValor = tabela[ultimaLinha][j];
+					colunaMaior = j;
+				}
+			}
+			
+			// escolher quem sai
+			int ultimaColuna = tabela[0].length - 1, linhaMenorDiv = 0;
+			float div = 0, menorDiv = 0;
+			for (int linha = 0; linha < tabela.length - 1; linha++ ) {
+				// Divisão para escolher qual linha será substituída
+				div = tabela[linha][ultimaColuna] / tabela[linha][colunaMaior];
+				if (linha == 0) {
+					menorDiv = div;
+				}
+				if (div > 0 && div < menorDiv) {
+					menorDiv = div;
+					linhaMenorDiv = linha;
+				}
+			}
+			
+			// Operações para transformar a linhaMenorDiv em variável básica
+			if (tabela[linhaMenorDiv][colunaMaior] > 1) {
+				// Se a coluna que entrou não for variável básica, a linha inteira é dividida pelo valor da coluna
+				for (int col = 0; col < tabela[linhaMenorDiv].length; col++) {
+					tabela[linhaMenorDiv][col] = tabela[linhaMenorDiv][col] / tabela[linhaMenorDiv][colunaMaior];
+				}
+			}
+			// Transformar todos os outros valores em 0
+			for (int linha = 0; linha < tabela.length; linha++) {
+				if (linha != linhaMenorDiv) {
+					for (int col = 0; col < tabela[linha].length; col++) {
+						tabela[linha][col] = tabela[linha][col] + ((tabela[linha][colunaMaior] * -1) * tabela[linhaMenorDiv][col]);
+					}
+				}
 			}
 		}
+		 System.out.println("Melhor solução \n\n");
+		 imprimeTabela(tabela);
+	}
+	
+	static public void imprimeTabela(float[][] tabela) {
+		for (int linha = 0; linha < tabela.length; linha++) {
+			System.out.print("\n linha " + linha + " ");
+			for (int col = 0; col < tabela[linha].length; col++) {
+				System.out.print(tabela[linha][col] + " ");
+			}
+		}
+	}
+	
+	//Verifica se esta é a melhor solução
+	static private boolean melhorSol(float[][] tabela) {
+		int ultimaLinha = tabela.length - 1;
+		boolean sol = false;
+		for (int col = 0; col < tabela[ultimaLinha].length; col++) {
+			if (tabela[ultimaLinha][col] < 0) {
+				sol = true;
+			} else {
+				sol = false;
+			}
+		}
+		return sol;
 	}
 	
 	
