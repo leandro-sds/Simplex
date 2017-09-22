@@ -101,7 +101,7 @@ public class Simplex {
 			for (int linha = 0; linha < tabela.length; linha++) {
 				if (linha != linhaMenorDiv) {
 					for (int col = 0; col < tabela[linha].length; col++) {
-						tabela[linha][col] = tabela[linha][col] + ((tabela[linha][colunaMaior] * -1) * tabela[linhaMenorDiv][col]);
+						tabela[linha][col] = tabela[linha][col] + ((tabela[linha][colunaMaior] * (-1)) * tabela[linhaMenorDiv][col]);
 					}
 				}
 			}
@@ -124,10 +124,11 @@ public class Simplex {
 		int ultimaLinha = tabela.length - 1;
 		boolean sol = false;
 		for (int col = 0; col < tabela[ultimaLinha].length; col++) {
-			if (tabela[ultimaLinha][col] < 0) {
+			if (tabela[ultimaLinha][col] <= 0) {
 				sol = true;
 			} else {
 				sol = false;
+				return sol;
 			}
 		}
 		return sol;
