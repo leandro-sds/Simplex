@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class Simplex {
 	
 	public static void main(String[] args) {
-		float[][] tabelaSimplex = { {70,70,1,0,0,0,4900}, {90,50,0,1,0,0,4500}, {2,0,0,0,1,0,80}, {0,3,0,0,0,1,180}, {20,60,0,0,0,0,0}};
-		int var, rest, linhas, colunas; /*
+		float[][] tabelaSimplex;
+		int var, rest, linhas, colunas; 
 		Scanner input = new Scanner(System.in);
 		
 		System.out.println("Digite o número de variáveis");
@@ -25,7 +25,7 @@ public class Simplex {
 		 * auxF: indicar os números de f (f1, f2, f3...)
 		 * auxCol: indicar os números de x (x1, x2, x3...)
 		 */
-		/*
+		
 		for (int l = 0; l < tabelaSimplex.length; l++) {
 			int auxL = l+1; 
 			int auxF = 1; 
@@ -39,7 +39,7 @@ public class Simplex {
 				/* Se auxCol for maior que o número de variáveis e menor que o número de colunas 
 				 * então estas colunas indicam os valores de f
 				 */
-		/*
+		
 				if (auxCol > var & auxCol < colunas) {
 					System.out.println("Digite o valor de f" + auxF + " da linha " + auxL);
 					tabelaSimplex[l][col] = input.nextFloat();
@@ -53,7 +53,7 @@ public class Simplex {
 			}
 		}
 		input.close();
-		*/
+		
 		
 		imprimeTabela(tabelaSimplex);
 		solucao(tabelaSimplex);
@@ -101,12 +101,12 @@ public class Simplex {
 			for (int linha = 0; linha < tabela.length; linha++) {
 				if (linha != linhaMenorDiv) {
 					for (int col = 0; col < tabela[linha].length; col++) {
-						tabela[linha][col] = tabela[linha][col] + ((tabela[linha][colunaMaior] * (-1)) * tabela[linhaMenorDiv][col]);
+						tabela[linha][col] = tabela[linha][col] + ((tabela[linha][colunaMaior] * -1) * tabela[linhaMenorDiv][col]);
 					}
 				}
 			}
 		}
-		 System.out.println("Melhor solução \n\n");
+		 System.out.println("\n\n Melhor solução \n");
 		 imprimeTabela(tabela);
 	}
 	
