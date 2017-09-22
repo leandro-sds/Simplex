@@ -39,7 +39,6 @@ public class Simplex {
 				/* Se auxCol for maior que o número de variáveis e menor que o número de colunas 
 				 * então estas colunas indicam os valores de f
 				 */
-		
 				if (auxCol > var & auxCol < colunas) {
 					System.out.println("Digite o valor de f" + auxF + " da linha " + auxL);
 					tabelaSimplex[l][col] = input.nextFloat();
