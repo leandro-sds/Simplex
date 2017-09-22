@@ -1,0 +1,1 @@
+Não está funcionando 100%. Por algum motivo que não consegui descobrir a coluna 'b' não está sendo atualizada na etapa de Lx = Lx + (-y)Lz. E também não imprimi a Função Objetivo, e não formatei o nome das linhas e colunas. Fiz em cima da hora, pois demorei a descobrir como começar. Utilizei array multidimensional e isso ajudou bastante.
